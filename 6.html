@@ -1,0 +1,97 @@
+<html>
+<head>
+<meta http-equiv="ContentType" content="text/html; charset=utf-8">
+<link rel="stylesheet" href="reg.css" type="text/css"> 
+<title> jopping </title>
+<script type="text/javascript">
+
+function rec(text,date) {
+	this.text=text;
+	this.date=date;
+}
+
+function time(date){
+	return ""+date.toLocaleTimeString();
+}
+
+function day(date){
+	return ""+date.toLocaleDateString();
+}
+
+var REC=[
+	new rec("Спокойной ночи!", new Date(2019,10,21,23,03,0,0)),
+	new rec("Спокойной ночи)", new Date(2019,10,21,23,05,0,0)),
+	new rec("Доброе утро", new Date(2019,10,22,07,30,0,0)),
+	new rec("Доброе утро, как спалось?", new Date(2019,10,22,08,27,0,0))
+]
+
+function showRec() {
+	var x="";
+	for( var i=0; i<REC.length;i++) {
+		if(i%2==0){
+			x +="<p style='background-color:limeGreen'>";
+		} else {
+			x +="<p style='background-color:yellowGreen'>";
+		}
+		x+=time(REC[i].date)+ " ";
+		x+="<strong>" + day(REC[i].date)+"</strong><br>";
+		x+= REC[i].text + "</p>";
+		
+	}
+	document.getElementById("place").innerHTML=x;
+}
+
+ function send() {
+	var x = new rec(
+		document.getElementById("new").value,
+		new Date());
+	REC.push(x);
+	showRec();
+	}
+
+function morning(){
+	var x="";
+	for( var i=0; i<REC.length;i++) {
+		if(time(REC[i].date)>=time(new Date(2019,10,21,06,00,0,0)) && time(REC[i].date)<=time(new Date(2019,10,21,10,00,0,0))) {
+			if(i%2==0){
+			x +="<p style='background-color:limeGreen'>";
+		} else {
+			x +="<p style='background-color:yellowGreen'>";
+		}
+		x+=time(REC[i].date)+ " ";
+		x+="<strong" + day(REC[i].date)+"/strong><br>";
+		x+= REC[i].text + "</p>";
+	}
+document.getElementById("place").innerHTML=x;
+}
+}
+
+function search() {
+	let y=prompt("Поиск:");
+	var x="";
+	for(var i=0; i<REC.length;i++) {
+	 if(REC[i].text.indexOf(y)>=0){
+		if(i%2==0){
+			x +="<p style='background-color:limeGreen'>";
+		} else {
+			x +="<p style='background-color:yellowGreen'>";
+		}
+		x+=time(REC[i].date)+ " ";
+		x+="<strong>" + day(REC[i].date)+"</strong><br>";
+		x+= REC[i].text + "</p>";	
+	}
+	}
+	document.getElementById("place").innerHTML=x;
+}
+
+</script>
+</head>
+
+<body onload="showRec()">
+<input type="text" id="new"/>
+<input type="button" value="Отправить" onclick="send()"/>
+<input type="button" value="Утренние" onclick="morning()"/>
+<input type="button" value="Поиск" onclick="search()"/>
+<div id="place">
+</div>
+</body>
